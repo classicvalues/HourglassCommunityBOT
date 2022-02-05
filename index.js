@@ -26,6 +26,14 @@ for (const folder of cmdfolder){
         client.commands.set(command.name, command)
     }
 }
+client.on('guildMemberAdd', (member)=>{
+    const welcomechannel = client.channels.cache.get('938504219474923581');
+    welcomechannel.send(`
+        Benvenuto ${member.toString()} in ${member.guild.name}
+        Leggi le regole per evitare problemi <#938504224407433247> 🧢
+        
+    `)
+})
 
 
 client.on('messageCreate', (message) =>{
