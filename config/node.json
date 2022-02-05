@@ -1,0 +1,9 @@
+{
+    "clientsettings":{
+        "nodes":[{
+            "host": "http://localhost",
+            "port": 5616,
+            "password": "lava.hc"
+        }]
+    }
+}
