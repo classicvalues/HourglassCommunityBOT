@@ -9,7 +9,7 @@ const client = new ds.Client({
 client.once('ready', () =>{
     console.log('online');
 });
-client.login('OTM5MTkxNDIzODMwNDc0ODE0.Yf1QLA.lZfa2ERrQJQNGqiBQ6L5LQwGAPw')
+client.login(process.env.token)
 
 const fs = require('fs');
 client.commands = new ds.Collection();
