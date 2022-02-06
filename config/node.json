@@ -1,9 +1,9 @@
 {
     "clientsettings":{
         "nodes":[{
-            "host": "http://localhost",
-            "port": 5616,
-            "password": "lava.hc"
+            "host": "node05.lavalink.eu",
+            "port": 2333,
+            "password": "Raccoon"
         }]
     }
 }
