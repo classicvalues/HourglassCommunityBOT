@@ -1,6 +1,6 @@
 module.exports={
     name: 'hour',
-    exec(message,args){
+    exec(message,args,client){
         const time = new Date();
         const ora = time.getHours();
         const minuto = time.getMinutes();

@@ -2,7 +2,7 @@ const { MessageEmbed } = require("discord.js");
 
 module.exports={
     name: 'ban',
-    exec(message, args){
+    exec(message, args, client){
         const utente = message.mentions.members.first();
         if (!message.member.permissions.has('BAN_MEMBERS')){
             return message.channel.send('non puoi bannare')

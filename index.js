@@ -1,7 +1,15 @@
 /*Questo è il bot!*/ 
 require('dotenv').config();
 const ytch = require('yt-channel-info');
-
+//? Settaggi per DisTube.
+/*const { DisTube } = require('distube');
+const { SpotifyPlugin } = require('@distube/spotify');*/
+/*client.distube = new DisTube(client,{
+    leaveOnEmpty: true,
+    emitNewSongOnly: true,
+    emitAddSongWhenCreatingQueue: false,
+    plugins: [new SpotifyPlugin()]
+});*/
 //! DATABASE.
 /*const dbclient = require('mongodb').MongoClient;
 const url = `mongodb+srv://X11:${process.env.passwordDB}@cluster.ynkbj.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`
@@ -15,6 +23,9 @@ const client = new ds.Client({
     intents: 32767,
     partials: ['MESSAGE', 'CHANNEL', 'REACTION']
 });
+//const {Canvas} = require('canvas');
+module.exports = client;
+
 client.once('ready', () =>{
     console.log('online');
 });
@@ -28,7 +39,6 @@ for (const files of cmdfiles){
     const command = require(`./commands/${files}`);
     client.commands.set(command.name, command)
 }
-client.user.setActivity('Hourglass Community', {type: 'WATCHING'})
 const cmdfolder = fs.readdirSync('./commands')
 for (const folder of cmdfolder){
     const cmdfiles = fs.readdirSync(`./commands/${folder}`).filter(file => file.endsWith('.js'));
@@ -41,7 +51,9 @@ for (const folder of cmdfolder){
 client.on('guildMemberAdd', (member)=>{
     const welcomechannel = client.channels.cache.get('938504219474923581');
     welcomechannel.send(`Benvenuto ${member.toString()} in ${member.guild.name}.
-    Leggi le regole per evitare problemi <#938504224407433247> 🧢`)
+    Leggi le regole per evitare problemi <#938504224407433247> 🧢`);
+    
+    
 });
 client.on('guildMemberRemove', (member)=>{
     const canaleaddio = client.channels.cache.get('939553273378136074');
@@ -49,10 +61,33 @@ client.on('guildMemberRemove', (member)=>{
     Ci dispiace che te ne sia andato... speriamo che ti sia divertito!
     `)
 })
+//! LAVALINK
+/*const {Node} = require('lavalink');
+const lavaclient = new Node({
+    password: 'Raccoon',
+    userID: '939191423830474814',
+    host: 'node01.lavalink.eu'
+});
+client.on('voiceStateUpdate', (shard, state) => lavaclient.voiceStateUpdate(state));
+client.on('voiceServerUpdate', (shard, info) => lavaclient.voiceServerUpdate(info));
+client.on('guildCreate', (shard, guild) =>{
+    for (const state of guild.voiceStates()) lavaclient.voiceStateUpdate(state);
+});
+const player = lavaclient.players.get('938503685145788448');
+const res = lavaclient.load('ytsearch:monstercat');
+player.play(res.tracks[0]);
+player.join('938504221504983050');*/
 
 //! Qui c'è la parte interessante del bot coi comandi! Vuole continuare? (lo scriva in chat)
 
-client.on('messageCreate', (message) =>{
+client.on('interactionCreate', (interaction) =>{
+    if(!interaction.isCommand()) return;
+    console.log(interaction);
+    let nomecomando = interaction.commandName;
+    client.commands.get(nomecomando).exec(interaction);
+})
+const config = require('./config/ds.json');
+client.on('messageCreate', async (message) =>{
     const prefix = "hc";
     if (!message.content.startsWith(prefix) || message.author.bot) return;
     const args = message.content.slice(prefix.length).trim().split(/ +/);
@@ -61,6 +96,33 @@ client.on('messageCreate', (message) =>{
     if (!client.commands.has(command)) return;
 
     client.commands.get(command).exec(message,args)
+    //! Sistema delle parolacce
+    let parolacce = require('./config/parolacce.json');
+    let trovata = false;
+    parolacce.forEach(word=>{
+        if(message.content.includes(word)){
+            trovata = true;
+        }
+    });
+    if(trovata){
+        message.delete();
+        const embedParolaccia = new ds.MessageEmbed()
+        .setTitle('hai inviato una parolaccia')
+        .setColor('#ef2245')
+        .setFooter('non scrivere parolacce :)')
+        .setTimestamp();
+        message.channel.send({embeds:[embedParolaccia]})
+    }
+	if(message.content.toLowerCase() === `!rec` && message.author.id == client.application?.owner.id){
+        const slasharray =[
+            {
+                name: 'ping',
+                description: 'pong'
+            }
+        ]
+        const slash = await client.guilds.cache.get(config.idServer)?.commands.set(slasharray);
+        console.log(slash)
+    }
 })
 /*
 //! Per finire anche le notifiche dei video

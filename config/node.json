@@ -1,9 +1,0 @@
-{
-    "clientsettings":{
-        "nodes":[{
-            "host": "node05.lavalink.eu",
-            "port": 2333,
-            "password": "Raccoon"
-        }]
-    }
-}
