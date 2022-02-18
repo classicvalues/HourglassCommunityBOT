@@ -24,11 +24,99 @@ const client = new ds.Client({
     partials: ['MESSAGE', 'CHANNEL', 'REACTION']
 });
 //const {Canvas} = require('canvas');
-module.exports = client;
 
-client.once('ready', () =>{
+client.on('ready', () =>{
     console.log('online');
+    const server = client.guilds.cache.get('938503685145788448');
+    server.commands.create(
+            {
+                name: 'test',
+                description: 'testing command'
+            }
+        )
+    server.commands.create(
+            {
+                name: 'ban',
+                description: 'ban command',
+                options:[
+                    {
+                        name: 'utente',
+                        description: 'Utente da bannare',
+                        type: 'USER',
+                        required: true
+                    },
+                    {
+                        name: 'motivo',
+                        description: 'Motivo del ban',
+                        type: 'STRING',
+                        required: false
+                    }
+                ]
+            }
+    )
+    server.commands.create({
+        name: 'clear',
+        description: 'Cancella i messaggi',
+        options:[
+            {
+                name: 'canale-cancellazione',
+                description: 'il canale di cui cancellare i messaggi',
+                type: 'CHANNEL',
+                required: true
+            },
+            {
+                name: 'numero-di-messaggi',
+                description: 'il numero di messaggi da cancellare (fino a 100)',
+                type: 'INTEGER',
+                required: false
+                
+            }
+        ]
+    })
+    server.commands.create({
+        name: 'lockdown',
+        description: 'Manda in lockdown il server',
+        options:[
+            {
+                name: 'si_o_no',
+                type: 'BOOLEAN',
+                required: true,
+            }
+        ] //presto si farà un eccezione coi livelli
+        
+    });
+    server.commands.create({
+        name: 'mute',
+        description: 'muta un utente',
+        options:[
+            {
+                name: 'tempo',
+                description: 'durata del mute',
+                type: 'NUMBER',
+                required: true
+            },
+            {
+                name: 'motivo-mute',
+                description: 'motivo del mute',
+                type: 'STRING',
+                required: false
+            }
+        ]
+    })
+    
 });
+
+
+client.on('interactionCreate', (interaction) =>{
+    if(!interaction.isCommand) return;
+    const nomecomando = interaction.commandName;
+    client.commands.get(nomecomando).exec(interaction);
+})
+
+
+
+
+
 //! Questo permette al bot di connettersi a discord (non posso farle vedere il token poichè è personale)
 client.login(process.env.token)
 //? Questo permette di non fare un casino e mettere 1000 righe di codice.
@@ -37,14 +125,14 @@ client.commands = new ds.Collection();
 const cmdfiles = fs.readdirSync('./commands').filter(files => files.endsWith('.js'));
 for (const files of cmdfiles){
     const command = require(`./commands/${files}`);
-    client.commands.set(command.name, command)
+    client.commands.set(command.name,command.data, command)
 }
 const cmdfolder = fs.readdirSync('./commands')
 for (const folder of cmdfolder){
     const cmdfiles = fs.readdirSync(`./commands/${folder}`).filter(file => file.endsWith('.js'));
     for(const file of cmdfiles){
-        const command = require(`./commands/${folder}/${file}`)
-        client.commands.set(command.name, command)
+        const command = require(`./commands/${folder}/${file}`);
+        client.commands.set(command.name,command.data, command);
     }
 }
 // Messaggi di benvenuto e addio
@@ -83,8 +171,7 @@ player.join('938504221504983050');*/
 client.on('interactionCreate', (interaction) =>{
     if(!interaction.isCommand()) return;
     console.log(interaction);
-    let nomecomando = interaction.commandName;
-    client.commands.get(nomecomando).exec(interaction);
+    
 })
 const config = require('./config/ds.json');
 client.on('messageCreate', async (message) =>{
@@ -112,8 +199,8 @@ client.on('messageCreate', async (message) =>{
         .setFooter('non scrivere parolacce :)')
         .setTimestamp();
         message.channel.send({embeds:[embedParolaccia]})
-    }
-	if(message.content.toLowerCase() === `!rec` && message.author.id == client.application?.owner.id){
+            }
+	/*if(message.content.toLowerCase() === `!rec` && message.author.id == client.application?.owner.id){
         const slasharray =[
             {
                 name: 'ping',
@@ -122,7 +209,7 @@ client.on('messageCreate', async (message) =>{
         ]
         const slash = await client.guilds.cache.get(config.idServer)?.commands.set(slasharray);
         console.log(slash)
-    }
+    }*/
 })
 /*
 //! Per finire anche le notifiche dei video
