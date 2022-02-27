@@ -1,6 +1,6 @@
 module.exports={
     name: 'apply-staff',
-    exec(message,args){
+    execute(message,args){
         message.channel.send('https://forms.gle/')
     }
 }

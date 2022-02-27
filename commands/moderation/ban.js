@@ -2,11 +2,7 @@ const { MessageEmbed } = require("discord.js");
 
 module.exports={
     name: 'ban',
-    data:{
-        name: 'ban',
-        description: 'ban command',
-    },
-    exec(message, interaction, args, client){
+    execute(message, interaction, args, client){
         const utente = message.mentions.members.first() || interaction.options.getUser('utente');
         let motivo = interaction.options.getString('motivo')
 

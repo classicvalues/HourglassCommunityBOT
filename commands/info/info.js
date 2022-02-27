@@ -1,11 +1,7 @@
 const {MessageEmbed} = require('discord.js');
-const { MongoBatchReExecutionError } = require('mongodb');
 module.exports={
 	name: 'info',
-	data:{
-		name: 'info'
-	}
-	exec(message,interaction,args){
+	execute(message,interaction,args){
 		const infoEmbed = new MessageEmbed()
 		.setTitle('Info bot')
 		.setColor('#F456D1')

@@ -1,6 +1,6 @@
 module.exports={
     name: 'lockdown',
-    exec(message){
+    execute(message){
         var lockdownAttivato = false;
         if (!lockdownAttivato) {
             message.channel.send("Lockdown ATTIVATO!")

@@ -1,6 +1,6 @@
 module.exports={
     name: 'ping',
-    exec(message,args){
+    execute(message,args){
         message.channel.send('lmao')
     }
 }

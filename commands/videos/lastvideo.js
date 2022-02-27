@@ -2,7 +2,7 @@ const { MessageEmbed } = require('discord.js');
 const ytch = require('yt-channel-info');
 module.exports={
     name: 'lastvideo',
-    exec(message,args){
+    execute(message,args){
         const idCanale = "TopolinoFumettiDisegni";
             ytch.getChannelVideos(idCanale, "newest").then((response) =>{
                     const videoEmbed = new MessageEmbed()

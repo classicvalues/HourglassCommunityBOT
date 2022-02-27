@@ -1,6 +1,7 @@
 module.exports={
     name: 'hour',
-    exec(message,args,client){
+    alias:['cheoresono', 'che ore sono'],
+    execute(message,args){
         const time = new Date();
         const ora = time.getHours();
         const minuto = time.getMinutes();

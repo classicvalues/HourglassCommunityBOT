@@ -2,7 +2,7 @@ const { MessageEmbed } = require("discord.js")
 
 module.exports={
     name: 'colors',
-    exec(message,args,client){
+    execute(message,args,client){
         const embedColori = new MessageEmbed()
             .setColor('#00F1BC')
             .setTitle('Ruoli Reazioni')
