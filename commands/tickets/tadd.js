@@ -1,14 +1,20 @@
+const {Message} = require('discord.js');
 module.exports = {
     name: 'tadd',
     alias : ['taggiungi', 'aggiungialticket'],
+    /**
+     * 
+     * @param {Message} message
+     */
     execute(message){
+
         let topic = message.channel.topic;
         if(!topic) {
             message.channel.send('Non puoi usare questo comando qui');
             return;
         }
-        if (topic.startsWith("Ticket di")){
-            let uid = topic.slice(10);
+        if (topic.startsWith("UID:")){
+            let uid = topic.slice(5);
             if(message.author.id == uid || message.member.permissions.has('MANAGE_CHANNELS')){
                 let utente = message.mentions.members.first();
                 if (!utente){

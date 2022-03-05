@@ -18,8 +18,10 @@
   "homepage": "https://github.com/Xenon-YT/HourglassCommunityBOT#readme",
   "dependencies": {
     "@discordjs/voice": "^0.8.0",
+    "@distube/soundcloud": "^1.1.0",
     "@distube/spotify": "^1.2.1",
     "@distube/yt-dlp": "^1.0.2",
+    "@haileybot/captcha-generator": "^1.7.0",
     "discord-canvas": "^1.4.1",
     "discord.js": "^13.6.0",
     "distube": "^3.3.2",
@@ -27,9 +29,10 @@
     "got": "^11.8.3",
     "lavalink": "^2.13.0",
     "libsodium-wrappers": "^0.7.9",
+    "moment": "^2.29.1",
     "mongodb": "^4.4.0",
     "mongoose": "^6.2.3",
-    "yt-channel-info": "^3.0.0",
+    "yt-channel-info": "^2.2.0",
     "yt-search": "^2.10.3",
     "ytdl-core": "^4.10.1"
   }
